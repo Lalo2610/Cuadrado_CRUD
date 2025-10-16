@@ -19,6 +19,6 @@
       <input type="date" name="detalle" required value="<?= htmlspecialchars($mensaje['detalle'] ?? '') ?>"/>
     </label>
     <button type="submit" class="btn">Actualizar</button>
-    <a class="btn secondary" href="<?= (BASE_URL ? rtrim(BASE_URL,'/') : '') ?>/mensajes?id=<?= (int)$mensaje['id_cuadrado'] ?>">Cancelar</a>
+    <a class="btn secondary" style="text-align: center;" href="<?= (BASE_URL ? rtrim(BASE_URL,'/') : '') ?>/mensajes?id=<?= (int)$mensaje['id_cuadrado'] ?>">Cancelar</a>
   </form>
 </section>

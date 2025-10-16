@@ -29,7 +29,7 @@ $route->get('/mensajes/show', [MensajeController::class, 'show']);
 $route->get('/mensajes/edit', [MensajeController::class, 'edit']);    
 $route->post('/mensajes/store', [MensajeController::class, 'store']);     
 $route->post('/mensajes/update', [MensajeController::class, 'update']);   
-$route->post('/mensajes/delete', [MensajeController::class, 'destroy']);  
+$route->post('/mensajes/destroy', [MensajeController::class, 'destroy']);  
 
 $route->dispatch();
 

@@ -1,6 +1,6 @@
 <?php /** @var string|null $error */ ?>
 <section>
-  <h2>Nuevo Cuadrado</h2>
+  <h2>Nuevo Registro</h2>
   <?php if (!empty($error)): ?>
     <div class="alert"><?= htmlspecialchars($error) ?></div>
   <?php endif; ?>

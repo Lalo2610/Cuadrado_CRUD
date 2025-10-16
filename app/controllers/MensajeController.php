@@ -14,50 +14,33 @@ class MensajeController extends Controller
         $this->view('mensajes/create');
     }
 
-    private function handleUpload(?array $file): ?string
-    {
-
-        if (!$file || ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE)
-            return null;
-
-        if (($file['error'] ?? 0) !== UPLOAD_ERR_OK)
-            throw new RuntimeException('Error al subir la imagen.');
-
-        if ($file['size'] > MAX_IMAGE_BYTES)
-            throw new RuntimeException('La imagen excede 2MB.');
-        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-
-        if (!in_array($ext, ALLOWED_EXT, true))
-            throw new RuntimeException('Extensión no permitida.');
-        $basename = bin2hex(random_bytes(8)) . '.' . $ext;
-        $dest = rtrim(UPLOAD_DIR, '/\\') . DIRECTORY_SEPARATOR . $basename;
-
-        if (!move_uploaded_file($file['tmp_name'], $dest))
-            throw new RuntimeException('No se pudo guardar la imagen.');
-        //eturn '/uploads/' . $name;
-        return (BASE_URL ? rtrim(BASE_URL, '/') : '') . '/imagenes/' . $basename;
-
-    }
-
     public function store()
     {
-
         try {
             $lado = trim($_POST['lado'] ?? '');
             $area = trim($_POST['area'] ?? '');
             $perimetro = trim($_POST['perimetro'] ?? '');
-            $detalle = trim($_POST['detalle'] ?? '');
+            $detalle = trim($_POST['detalle'] ?? ''); 
 
-            if ($lado === '' || $area === '' || $perimetro === '' || $detalle === '')
+            if ($lado === '' || $area === '' || $perimetro === '' || $detalle === '') {
                 throw new RuntimeException('Todos los campos son obligatorios.');
-            $imagenPath = $this->handleUpload($_FILES['imagen'] ?? null);
-            $id = Mensaje::create(['lado' => $lado, 'area' => $area, 'perimetro' => $perimetro, 'detalle' => $detalle]);
-            $this->redirect('/mensajes/show?id_cuadrado=' . $id);
+            }
+
+            $id = Mensaje::create([
+                'lado' => $lado, 
+                'area' => $area, 
+                'perimetro' => $perimetro, 
+                'detalle' => $detalle === '' ? null : $detalle 
+            ]);
+
+            $this->redirect('/mensajes');
+
         } catch (Throwable $e) {
             $error = $e->getMessage();
             $this->view('mensajes/create', compact('error'));
         }
     }
+
 
     public function show()
     {
@@ -91,30 +74,37 @@ class MensajeController extends Controller
 
             if (!$orig)
                 throw new RuntimeException('Mensaje no existe.');
-            $titulo = trim($_POST['titulo'] ?? '');
-            $descripcion = trim($_POST['descripcion'] ?? '');
-            $fecha = trim($_POST['fecha'] ?? '');
+            $lado = trim($_POST['lado'] ?? '');
+            $area = trim($_POST['area'] ?? '');
+            $perimetro = trim($_POST['perimetro'] ?? '');
+            $detalle = trim($_POST['detalle'] ?? '');
 
-            if ($titulo === '' || $descripcion === '' || $fecha === '')
-                throw new RuntimeException('Todos los campos son obligatorios.');
-            $new = $this->handleUpload($_FILES['imagen'] ?? null);
-            $imagenPath = ($new !== null) ? $new : ($orig['imagen'] ?? null);
-            Mensaje::updateById($id, ['titulo' => $titulo, 'descripcion' => $descripcion, 'imagen' => $imagenPath, 'fecha' => $fecha]);
-            $this->redirect('/mensajes/show?id=' . $id);
+            if ($lado === '' || $area === '' || $perimetro === '')
+                throw new RuntimeException('Los campos Lado, Área y Perímetro son obligatorios.');
+            $detalle_val = $detalle === '' ? null : $detalle;
+            
+            Mensaje::updateById($id, ['lado' => $lado, 'area' => $area, 'perimetro' => $perimetro, 'detalle' => $detalle_val]);
+            
+            $this->redirect('/mensajes');
 
         } catch (Throwable $e) {
             $error = $e->getMessage();
-            $mensaje = ['id' => $_POST['id'] ?? 0, 'titulo' => $_POST['titulo'] ?? '', 'descripcion' => $_POST['descripcion'] ?? '', 'fecha' => $_POST['fecha'] ?? '', 'imagen' => $_POST['imagen_actual'] ?? null];
+            $mensaje = [
+                'id_cuadrado' => $_POST['id'] ?? 0, 
+                'lado' => $_POST['lado'] ?? '', 'area' => $_POST['area'] ?? '', 
+                'perimetro' => $_POST['perimetro'] ?? '', 'detalle' => $_POST['detalle'] ?? ''
+            ];
 
             $this->view('mensajes/edit', compact('mensaje', 'error'));
         }
     }
-
     public function destroy()
     {
-        $id = (int) ($_POST['id'] ?? 0);
-        if ($id)
-            Mensaje::deleteById($id);
+        $id_cuadrado = (int) ($_POST['id_cuadrado'] ?? 0);
+        if ($id_cuadrado) {
+            Mensaje::deleteById($id_cuadrado); 
+        }
+        
         $this->redirect('/mensajes');
     }
 }

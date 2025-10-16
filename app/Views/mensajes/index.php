@@ -15,9 +15,14 @@
           <p>Perímetro: <?= nl2br(htmlspecialchars(mb_strimwidth($m['perimetro'], 0, 140, '…'))) ?></p>
           <p class="muted">Fecha: <?= htmlspecialchars($m['detalle']) ?></p>
           <div class="row">
-            <a class="btn" href="<?= (BASE_URL ? rtrim(BASE_URL,'/') : '') ?>/mensajes/show?id=<?= (int)$m['id_cuadrado'] ?>">Ver</a>
+            <a class="btn" href="<?= (BASE_URL ? rtrim(BASE_URL,'/') : '') ?>/mensajes?id=<?= (int)$m['id_cuadrado'] ?>">Ver</a>
             <a class="btn secondary" href="<?= (BASE_URL ? rtrim(BASE_URL,'/') : '') ?>/mensajes/edit?id=<?= (int)$m['id_cuadrado'] ?>">Editar</a>
-            <a class="btn secondary" href="<?= (BASE_URL ? rtrim(BASE_URL,'/') : '') ?>/mensajes?id=<?= (int)$m['id_cuadrado'] ?>">Eliminar</a>
+            <form method="POST" action="<?= (BASE_URL ? rtrim(BASE_URL,'/') : '') ?>/mensajes/destroy" 
+                  style="display:inline-block;" 
+                  onsubmit="return confirm('¿Estás seguro de que quieres eliminar el cuadrado #<?= (int)$m['id_cuadrado'] ?>?');">
+              <input type="hidden" name="id_cuadrado" value="<?= (int)$m['id_cuadrado'] ?>">
+              <button type="submit" class="btn secondary danger">Eliminar</button>
+            </form>
           </div>
         </article>
       <?php endforeach; ?>
