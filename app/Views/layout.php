@@ -8,7 +8,7 @@
   <meta name="description">
   <meta name="author">
   <meta name="keywords">
-  <title>Hola Mundo MVC</title>
+  <title>Cuadrado</title>
   <link rel="icon" href="<?= BASE_URL ? rtrim(BASE_URL, characters: '/') : '' ?>/imagenes/logo.ico">
   <link rel="stylesheet" href="<?= BASE_URL ? rtrim(BASE_URL, '/') : '' ?>/assets/css/style.css">
 </head>
