@@ -1,6 +1,6 @@
 /* public/assets/css/styles.css */
 :root {
-  --bg: #0b0c10;
+  --bg: #171818;
   --fg: #e1e1e6;
   --muted: #9aa0a6;
   --acc: #61dafb;
@@ -107,7 +107,7 @@ input[type="file"] {
   padding: 0.55rem 0.7rem;
   border-radius: 10px;
   border: 1px solid #2a2f36;
-  background: #0f1116;
+  background: #b9b49b;
   color: var(--fg);
 }
 .alert {

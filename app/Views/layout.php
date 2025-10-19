@@ -9,14 +9,14 @@
   <meta name="author">
   <meta name="keywords">
   <title>Cuadrado</title>
-  <link rel="icon" href="<?= BASE_URL ? rtrim(BASE_URL, characters: '/') : '' ?>/imagenes/logo.ico">
-  <link rel="stylesheet" href="<?= BASE_URL ? rtrim(BASE_URL, '/') : '' ?>/assets/css/style.css">
+  <link rel="icon" href="<?= BASE_URL ? rtrim(BASE_URL, characters: '/'): '' ?>/imagenes/logo.ico">
+  <link rel="stylesheet" href="<?= BASE_URL ? rtrim(BASE_URL, '/'): '' ?>/assets/css/style.css">
 </head>
 
 <body>
   <header class="container">
     <h1>
-      <a href="<?= BASE_URL ? rtrim(BASE_URL, '/') : '' ?>/">✔️CRUD CUADRADO✔️</a>
+      <a href="<?= BASE_URL ? rtrim(BASE_URL, '/') : '' ?>/">👉CRUD CUADRADO</a>
     </h1>
     <nav>
       <a href="<?= BASE_URL ? rtrim(BASE_URL, '/') : '' ?>/mensajes">Listar cuadrados</a>
@@ -29,10 +29,10 @@
   </main>
 
   <footer class="container footer">
-    <small>Hecho con ❤️ en PHP • MVC • PDO • Largagon</small>
+    <small>Hecho en PHP • MVC • PDO • SQL</small>
   </footer>
 
-  <script src="<?= BASE_URL ? rtrim(BASE_URL, '/') : '' ?>/assets/js/app.js"></script>
+  <script src="<?= BASE_URL ? rtrim(BASE_URL, '/'): '' ?>/assets/js/app.js"></script>
 </body>
 
 </html>
